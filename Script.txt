@@ -1,0 +1,46 @@
+Sub WriteFile(pt,at,rt)
+WrFilePath = pt
+ActTxt=at
+RepTxt=Cstr(rt)
+wscript.echo pt&at&rt
+
+Const ForReading = 1
+Const ForWriting = 2
+Set objFSO = CreateObject("Scripting.FileSystemObject")
+Set getFile = objFSO.GetFile(WrFilePath)
+Set openFile = objFSO.OpenTextFile(WrFilePath,ForReading)
+
+'=== Text Check =======
+If getFile.Size = 0 Then
+wscript.echo("Replace Failed-Empty File")
+openFile.Close
+else
+txt = openFile.ReadAll
+openFile.Close
+NewFile = Replace(txt,ActTxt,RepTxt)
+
+'== Write the new text ======
+Set openFile = objFSO.OpenTextFile(WrFilePath,ForWriting)
+openFile.WriteLine NewFile
+openFile.Close
+
+'=== Replaced Str Count ==
+tmpstr = Cstr(getFile.ReadLine)
+
+Dim arr : arr = split(tmpstr,RepTxt)
+RepCnt=UBound(arr)
+wscript.echo "Text : "&RepTxt&"is replaced/available for "&RepCnt&" times"
+
+Set openFile = Nothing
+Set objFSO = Nothing
+set getFile = Nothing
+
+End If
+ 
+End Sub
+
+path="C:\Users\BALABALAKRISHNAN\Desktop\File path Replacer\TestFile.txt"
+at1="C:/Selenium_Web"
+rt1="replaced by BBM"
+
+Call WriteFile(path,at1,rt1)
