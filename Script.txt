@@ -1,46 +1,98 @@
-Sub WriteFile(pt,at,rt)
-WrFilePath = pt
-ActTxt=at
-RepTxt=Cstr(rt)
-wscript.echo pt&at&rt
-
+'#Global Declaration
 Const ForReading = 1
 Const ForWriting = 2
+
+Function Main()
+
+
+
+
+End Function 
+'%#$%#%#======%##% >> END OF MAIN FUNCTION CODE << %%%%%#%=====#%#%#%#%#%
+
+
+
+
+
+'************ ### Function Definitions #### *****************
+
+'###### FN-SUB :: Browse for the Config File ] ###############
+
+Sub BrowseConfFile()
+'###### Get the Configuration File Path ###############
+Set wShell=CreateObject("WScript.Shell")
+Set oExec=wShell.Exec("mshta.exe ""about:<input type=file id=FILE><script>FILE.click();new ActiveXObject('Scripting.FileSystemObject').GetStandardStream(1).WriteLine(FILE.value);close();resizeTo(0,0);</script>""")
+ConfFilePath = Cstr(oExec.StdOut.ReadLine)
+'wscript.echo ConfFilePath
+
+'CLEAR MEM
+Set wShell= Nothing
+Set oExec =Nothing
+End Sub
+
+'###### FN-SUB :: Read the Configuration File[ Reads the FilePath,Text needs to be replaced] ###############
+Sub ReadConfFile(ConfFilePath)
 Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set getFile = objFSO.GetFile(WrFilePath)
+Set openFile = objFSO.OpenTextFile(ConfFilePath,ForReading)
+
+txtRe = openFile.ReadAll
+Dim arr : arr = Split(txtRe,vbCrlf)
+WrFilePath = arr(2)
+WrFilePath = arr(3)
+RepTxt =arr(4)
+'wscript.echo WrFilePath&"--"&WrFilePath&"--"&RepTxt
+openFile.Close
+
+'CLEAR MEM
+Set objFSO = Nothing
+Set openFile = Nothing
+End Sub
+
+'###### FN-SUB :: Replace the text / Get the no. of replacements ############### 
+
+Sub WriteFile(WrFilePath,ActTxt,RepTxt)
+
+Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set openFile = objFSO.OpenTextFile(WrFilePath,ForReading)
+Set getFile = objFSO.GetFile(WrFilePath) ' Only for Filesize check
 
 '=== Text Check =======
 If getFile.Size = 0 Then
 wscript.echo("Replace Failed-Empty File")
 openFile.Close
 else
-txt = openFile.ReadAll
+txtWr = openFile.ReadAll
 openFile.Close
-NewFile = Replace(txt,ActTxt,RepTxt)
+NewFile = Replace(txtWr,ActTxt,RepTxt)
 
 '== Write the new text ======
-Set openFile = objFSO.OpenTextFile(WrFilePath,ForWriting)
-openFile.WriteLine NewFile
-openFile.Close
+Set wrFile = objFSO.OpenTextFile(WrFilePath,ForWriting)
+wrFile.WriteLine NewFile
+wrFile.Close
 
-'=== Replaced Str Count ==
-tmpstr = Cstr(getFile.ReadLine)
-
-Dim arr : arr = split(tmpstr,RepTxt)
-RepCnt=UBound(arr)
-wscript.echo "Text : "&RepTxt&"is replaced/available for "&RepCnt&" times"
+'==== Get the Replaced Places ========
+Set openFile = objFSO.OpenTextFile(WrFilePath,ForReading)
+Dim RepCnt 
+'Read Line by Line
+do until openFile.AtEndOfStream
+txtL=openFile.ReadLine
+tmpstr=Cstr(txtL)
+'Check only for non-null line
+if tmpstr <> "" then
+wscript.echo tmpstr
+'Get Count of Replacement/presence
+Dim arr : arr = split(tmpStr,RepTxt)
+RepCnt=RepCnt+UBound(arr)
+End If
+loop
+Msgbox "Total Times of text presence :"&RepCnt
 
 Set openFile = Nothing
 Set objFSO = Nothing
-set getFile = Nothing
-
-End If
- 
+End if
 End Sub
 
-path="C:\Users\BALABALAKRISHNAN\Desktop\File path Replacer\TestFile.txt"
-at1="C:/Selenium_Web"
-rt1="replaced by BBM"
+'************************* END OF FN.DEFn****************************************
 
-Call WriteFile(path,at1,rt1)
+'=======$$$$$$$ ## Main Function ## $$$$$$$========
+Call Main()
