@@ -1,0 +1,11 @@
+'<THIS LINE WILL BE IGNORED> L1#SourceFilePath ; L#2Dest.FilePath ; L#3SourceTxt ; L#4RepTxt ; All Texts need NOT be enclosed in double quotes ; Config File path : C:\Users\BALABALAKRISHNAN\Desktop\File path Replacer\Config-File.txt
+C:\Users\BALABALAKRISHNAN\Desktop\File path Replacer\TestFile.txt
+TEXT/CHECK
+Replaced-text#1
+C:\Users\BALABALAKRISHNAN\Desktop\File path Replacer\TestFile2.txt
+TEXT/CHECK
+Replaced-text#2
+C:\Users\BALABALAKRISHNAN\Desktop\File path Replacer\TestFile3.txt
+TEXT/CHECK
+Replaced-text#3
+<<<<<<<<< EOL : LINES WILL BE IGNORED : PLEASE ENSURE THERE ARE NO ENTRIES BELOW THIS LINE>>>>>>>>>>>>>>>
