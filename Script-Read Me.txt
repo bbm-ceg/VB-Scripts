@@ -1,0 +1,18 @@
+# This program is written in VB Script authored by Bala [Mail @b.balamuraliceg89@gmail.com].
+
+# Functionality :
+	This program can be used for mass replacement of same text in multiple files.
+
+# Prerequisites :
+	$ Create a text file with 3 inputs where the 1st and last line will be ignored in processing.
+	Eg.Content :
+	<1st Line Ignored>
+	L1-> File path including file name.
+	L2-> Actual text present in the file which needs replacement.
+	L3-> Replacement Text.
+		(Same L1,L2,L3 can be repeated here for multiple files.)
+	<last Line Ignored>
+
+# Execution Steps :
+	$ Run the vbs file(double-click) and it would ask for the text file which has the details as mentioned in pre-requisites.
+	$ After execution, please open and check any of the file for the same.
