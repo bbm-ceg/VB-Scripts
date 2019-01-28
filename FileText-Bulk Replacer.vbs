@@ -2,14 +2,11 @@
 Const ForReading = 1
 Const ForWriting = 2
 
-'=======$$$$$$$ ## Main Function ## $$$$$$$========
-Call Main()
-
 '=========== << Main Function >> =========
 Function Main()
 BrowseConfFile() 			'Browse for the Configuration File 
 End Function 
-'=========== >> END OF MAIN FUNCTION CODE << =====
+'%#$%#%#======%##% >> END OF MAIN FUNCTION CODE << %%%%%#%=====#%#%#%#%#%
 
 '************ ### Function Definitions #### *****************
 
@@ -74,6 +71,11 @@ If getFile.Size = 0 Then
 wscript.echo("Replace Failed-Empty Source File : "&WrFilePath)
 openFile.Close
 else
+'--- Take BackUp before Replace
+CpFilePath = "Old_"&WrFilePath&".bak"
+objFSO.CopyFile WrFilePath,CpFilePath,True
+
+'---- Replace fn. Starts
 txtWr = openFile.ReadAll
 openFile.Close
 NewFile = Replace(txtWr,ActTxt,RepTxt)
@@ -113,3 +115,6 @@ End if ' File Exist check
 End Sub
 
 '************************* END OF FN.DEFn****************************************
+
+'=======$$$$$$$ ## Main Function ## $$$$$$$========
+Call Main()
